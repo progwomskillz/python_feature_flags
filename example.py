@@ -14,5 +14,5 @@ class AuthService():
         return 'Hello from class AuthService method logout()'
 
 auth_service = AuthService()
-print(f'auth_service.login(): {auth_service.login()}')
-print(f'auth_service.logout(): {auth_service.logout()}')
+print(f'auth_service.login(): {auth_service.login()}') # Hello from class AuthService method login()
+print(f'auth_service.logout(): {auth_service.logout()}') # None
