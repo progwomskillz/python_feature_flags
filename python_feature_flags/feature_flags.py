@@ -1,5 +1,5 @@
 import functools
-from os import environ
+import os
 
 from .exceptions import FeatureFlagNotFound, InvalidValueOfFeatureFlag
 
@@ -28,7 +28,7 @@ class FeatureFlags():
 
     def __configure_flag(self, flag):
         try:
-            lower_value = environ[flag].lower()
+            lower_value = os.environ[flag].lower()
         except KeyError:
             raise FeatureFlagNotFound(f'{flag} feature flag not found.')
         possible_values = {

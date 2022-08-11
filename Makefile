@@ -1,17 +1,19 @@
+include ./.env
+
 down:
-	docker-compose down
+	docker compose down
 
 build:
-	docker-compose build
+	docker compose build
 
 up: build
-	docker-compose up -d
+	docker compose up -d
 
 unit_tests: up
-	docker-compose exec -T $(APP_NAME) pytest -s ./tests/unit/
+	docker exec -it $(APP_NAME) pytest -s --cov-report term-missing --cov=. ./tests/unit/
 
 integration_tests: up
-	docker-compose exec -T $(APP_NAME) pytest -s ./tests/integration/
+	docker exec -it $(APP_NAME) pytest -s --cov-report term-missing --cov=. ./tests/integration/
 
 tests: up
-	docker-compose exec -T $(APP_NAME) pytest -s ./tests/
+	docker exec -it $(APP_NAME) pytest -s --cov-report term-missing --cov=. ./tests/
