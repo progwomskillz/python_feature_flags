@@ -1,0 +1,7 @@
+version: "3.5"
+services:
+  python_feature_flags:
+    build: "."
+    image: "${APP_NAME}:latest"
+    env_file: "./.env"
+    container_name: "${APP_NAME}"

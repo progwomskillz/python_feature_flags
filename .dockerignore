@@ -1,0 +1,26 @@
+# Ignore Git
+/.git/
+/.gitignore
+
+# Ignore venv
+/venv/
+
+# Ignore IDE files
+/.vscode/
+
+# Ignore tests and python temp files
+.pytest_cache/
+__pycache__/
+*__pycache__/
+/__pycache__/
+*.py[cod]
+*~
+
+# Ignore make file
+/Makefile
+
+# Ignore markdown files
+*.md
+
+# Ignore logs files
+*.log
