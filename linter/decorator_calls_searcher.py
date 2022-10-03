@@ -6,9 +6,8 @@ class DecoratorCallsSearcher(ast.NodeVisitor):
     def __init__(self):
         self._decorator_calls = []
 
-    def search(self, code):
-        abstract_syntax_tree = ast.parse(code)
-        self.visit(abstract_syntax_tree)
+    def search(self, py_module):
+        self.visit(py_module.abstract_syntax_tree)
         result = self._decorator_calls[:]
         self._decorator_calls = []
         return result

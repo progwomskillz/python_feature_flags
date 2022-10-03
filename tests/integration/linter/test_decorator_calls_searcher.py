@@ -1,5 +1,7 @@
+import ast
 from linter.decorator_calls_searcher import DecoratorCallsSearcher
 from linter.decorator_call import DecoratorCall
+from linter.py_module import PyModule
 
 
 class TestDecoratorCallsSearcher:
@@ -7,15 +9,20 @@ class TestDecoratorCallsSearcher:
         self.searcher = DecoratorCallsSearcher()
 
     def test_search_without_args_call(self):
-        code = \
-            """
+        py_module = PyModule(
+            filename="test.py",
+            abstract_syntax_tree=ast.parse(
+                """
 from decorator import decorator
 class RootPlacedExecutor:
     @decorator.decorate
     def easy_decorated_method(self, arg_1, arg_2):
         ...
-            """
-        result = self.searcher.search(code)
+                """
+            )
+        )
+
+        result = self.searcher.search(py_module)
 
         without_args_call = result[0]
         assert isinstance(without_args_call, DecoratorCall)
@@ -25,15 +32,20 @@ class RootPlacedExecutor:
         assert without_args_call.call_args is None
 
     def test_search_with_args_call(self):
-        code = \
-            """
+        py_module = PyModule(
+            filename="test.py",
+            abstract_syntax_tree=ast.parse(
+                """
 from decorator import decorator
 class RootPlacedExecutor:
-    @decorator.decorate("some arg")
+    @decorator.decorate(\"some arg\")
     def easy_decorated_method(self, arg_1, arg_2):
         ...
-            """
-        result = self.searcher.search(code)
+                """
+            )
+        )
+
+        result = self.searcher.search(py_module)
 
         with_args_call = result[0]
         assert isinstance(with_args_call, DecoratorCall)
@@ -43,15 +55,19 @@ class RootPlacedExecutor:
         assert with_args_call.call_kwargs is None
 
     def test_search_with_kwargs_call(self):
-        code = \
-            """
+        py_module = PyModule(
+            filename="test.py",
+            abstract_syntax_tree=ast.parse(
+                """
 from decorator import decorator
 class RootPlacedExecutor:
     @decorator.decorate(some_kwarg="some kwarg value")
     def easy_decorated_method(self, arg_1, arg_2):
         ...
-            """
-        result = self.searcher.search(code)
+                """
+            )
+        )
+        result = self.searcher.search(py_module)
 
         with_args_call = result[0]
         assert isinstance(with_args_call, DecoratorCall)
@@ -61,16 +77,22 @@ class RootPlacedExecutor:
         assert with_args_call.call_kwargs == {"some_kwarg": "some kwarg value"}
 
     def test_search_with_args_and_kwargs_call(self):
-        code = \
-            """
+        py_module = PyModule(
+            filename="test.py",
+            abstract_syntax_tree=ast.parse(
+                (
+                    """
 from decorator import decorator
 class RootPlacedExecutor:
-    @decorator.decorate("some arg value", some_kwarg="some kwarg value")
+    @decorator.decorate("some arg value", some_kwarg="some kwarg value") 
     def easy_decorated_method(self, arg_1, arg_2):
         ...
-            """
+                    """
+                )
+            )
+        )
         searcher = DecoratorCallsSearcher()
-        result = searcher.search(code)
+        result = searcher.search(py_module)
 
         with_args_call = result[0]
         assert isinstance(with_args_call, DecoratorCall)
