@@ -2,21 +2,21 @@ import ast
 
 
 class DecoratorCall:
-    def __init__(self, decorator_name, line_number, call_args, call_kwargs):
-        self.decorator_name = decorator_name
-        self.line_number = line_number
-        self.call_args = call_args
-        self.call_kwargs = call_kwargs
+    def __init__(self):
+        self.decorator_name = None
+        self.filename = None
+        self.line_number = None
+        self.call_args = None
+        self.call_kwargs = None
 
     @staticmethod
     def from_ast_attribute(ast_attribute):
         decorator_method_name = ast_attribute.attr
-        decorator_call = DecoratorCall(
-            decorator_name=decorator_method_name,
-            line_number=ast_attribute.lineno,
-            call_args=None,
-            call_kwargs=None,
-        )
+        decorator_call = DecoratorCall()
+        decorator_call.decorator_name = decorator_method_name
+        decorator_call.line_number = ast_attribute.lineno
+        decorator_call.call_args = None
+        decorator_call.call_kwargs = None
         return decorator_call
 
     @staticmethod
