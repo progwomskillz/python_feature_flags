@@ -1,5 +1,5 @@
 from mock import Mock, call
-from linter.py_modules_provider import PyModulesProvider
+from linter.providers.py_modules_provider import PyModulesProvider
 
 
 class TestPyModulesProvider:
@@ -34,6 +34,4 @@ class TestPyModulesProvider:
         assert result[1].abstract_syntax_tree == abstract_syntax_tree_mocks[1]
 
         self.py_paths_provider_mock.get_paths.assert_called_once_with(self.root_path)
-        self.ast_loader_mock.from_file.assert_has_calls(
-            [call(path) for path in paths]
-        )
+        self.ast_loader_mock.from_file.assert_has_calls([call(path) for path in paths])

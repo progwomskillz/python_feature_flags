@@ -1,4 +1,4 @@
-from .py_module import PyModule
+from linter.models.py_module import PyModule
 
 
 class PyModulesProvider:

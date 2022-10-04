@@ -1,4 +1,4 @@
-from linter.py_paths_provider import PyPathsProvider
+from linter.providers.py_paths_provider import PyPathsProvider
 
 
 class TestPyPathsProvider:

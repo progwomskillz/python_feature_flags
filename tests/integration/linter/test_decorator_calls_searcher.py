@@ -1,7 +1,7 @@
 import ast
 from linter.decorator_calls_searcher import DecoratorCallsSearcher
-from linter.decorator_call import DecoratorCall
-from linter.py_module import PyModule
+from linter.models.decorator_call import DecoratorCall
+from linter.models.py_module import PyModule
 
 
 class TestDecoratorCallsSearcher:
@@ -29,8 +29,8 @@ class RootPlacedExecutor:
         assert decorator_call.decorator_name == 'decorate'
         assert decorator_call.filename == "test.py"
         assert decorator_call.line_number == 4
-        assert decorator_call.call_args is None
-        assert decorator_call.call_args is None
+        assert decorator_call.args == []
+        assert decorator_call.kwargs == {}
 
     def test_search_with_args_call(self):
         py_module = PyModule(
@@ -53,8 +53,8 @@ class RootPlacedExecutor:
         assert decorator_call.decorator_name == "decorate"
         assert decorator_call.filename == "test.py"
         assert decorator_call.line_number == 4
-        assert decorator_call.call_args == ["some arg"]
-        assert decorator_call.call_kwargs is None
+        assert decorator_call.args == ["some arg"]
+        assert decorator_call.kwargs == {}
 
     def test_search_with_kwargs_call(self):
         py_module = PyModule(
@@ -76,8 +76,8 @@ class RootPlacedExecutor:
         assert decorator_call.decorator_name == "decorate"
         assert decorator_call.filename == "test.py"
         assert decorator_call.line_number == 4
-        assert decorator_call.call_args is None
-        assert decorator_call.call_kwargs == {"some_kwarg": "some kwarg value"}
+        assert decorator_call.args == []
+        assert decorator_call.kwargs == {"some_kwarg": "some kwarg value"}
 
     def test_search_with_args_and_kwargs_call(self):
         py_module = PyModule(
@@ -102,5 +102,5 @@ class RootPlacedExecutor:
         assert decorator_call.decorator_name == "decorate"
         assert decorator_call.filename == "test.py"
         assert decorator_call.line_number == 4
-        assert decorator_call.call_args == ["some arg value"]
-        assert decorator_call.call_kwargs == {"some_kwarg": "some kwarg value"}
+        assert decorator_call.args == ["some arg value"]
+        assert decorator_call.kwargs == {"some_kwarg": "some kwarg value"}

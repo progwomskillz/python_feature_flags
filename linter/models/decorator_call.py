@@ -6,8 +6,8 @@ class DecoratorCall:
         self.decorator_name = None
         self.filename = None
         self.line_number = None
-        self.call_args = None
-        self.call_kwargs = None
+        self.args = None
+        self.kwargs = None
 
     @staticmethod
     def from_ast_attribute(ast_attribute):
@@ -15,8 +15,8 @@ class DecoratorCall:
         decorator_call = DecoratorCall()
         decorator_call.decorator_name = decorator_method_name
         decorator_call.line_number = ast_attribute.lineno
-        decorator_call.call_args = None
-        decorator_call.call_kwargs = None
+        decorator_call.args = []
+        decorator_call.kwargs = {}
         return decorator_call
 
     @staticmethod
@@ -35,6 +35,6 @@ class DecoratorCall:
         if not isinstance(ast_call.func, ast.Attribute):
             return None
         decorator_call = DecoratorCall.from_ast_attribute(ast_call.func)
-        decorator_call.call_args = call_args or None
-        decorator_call.call_kwargs = call_kwargs or None
+        decorator_call.args = call_args
+        decorator_call.kwargs = call_kwargs
         return decorator_call
