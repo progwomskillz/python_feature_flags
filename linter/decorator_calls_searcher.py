@@ -10,6 +10,8 @@ class DecoratorCallsSearcher(ast.NodeVisitor):
         self.visit(py_module.abstract_syntax_tree)
         result = self._decorator_calls[:]
         self._decorator_calls = []
+        for decorator_call in result:
+            decorator_call.filename = py_module.filename
         return result
 
     def visit_FunctionDef(self, node):
@@ -19,5 +21,6 @@ class DecoratorCallsSearcher(ast.NodeVisitor):
                 decorator_call = DecoratorCall.from_ast_attribute(decorator)
             if isinstance(decorator, ast.Call):
                 decorator_call = DecoratorCall.from_ast_call(decorator)
-            if decorator_call is not None:
-                self._decorator_calls.append(decorator_call)
+            if not decorator_call:
+                continue
+            self._decorator_calls.append(decorator_call)

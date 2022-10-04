@@ -24,12 +24,13 @@ class RootPlacedExecutor:
 
         result = self.searcher.search(py_module)
 
-        without_args_call = result[0]
-        assert isinstance(without_args_call, DecoratorCall)
-        assert without_args_call.decorator_name == 'decorate'
-        assert without_args_call.line_number == 4
-        assert without_args_call.call_args is None
-        assert without_args_call.call_args is None
+        decorator_call = result[0]
+        assert isinstance(decorator_call, DecoratorCall)
+        assert decorator_call.decorator_name == 'decorate'
+        assert decorator_call.filename == "test.py"
+        assert decorator_call.line_number == 4
+        assert decorator_call.call_args is None
+        assert decorator_call.call_args is None
 
     def test_search_with_args_call(self):
         py_module = PyModule(
@@ -47,12 +48,13 @@ class RootPlacedExecutor:
 
         result = self.searcher.search(py_module)
 
-        with_args_call = result[0]
-        assert isinstance(with_args_call, DecoratorCall)
-        assert with_args_call.decorator_name == "decorate"
-        assert with_args_call.line_number == 4
-        assert with_args_call.call_args == ["some arg"]
-        assert with_args_call.call_kwargs is None
+        decorator_call = result[0]
+        assert isinstance(decorator_call, DecoratorCall)
+        assert decorator_call.decorator_name == "decorate"
+        assert decorator_call.filename == "test.py"
+        assert decorator_call.line_number == 4
+        assert decorator_call.call_args == ["some arg"]
+        assert decorator_call.call_kwargs is None
 
     def test_search_with_kwargs_call(self):
         py_module = PyModule(
@@ -69,12 +71,13 @@ class RootPlacedExecutor:
         )
         result = self.searcher.search(py_module)
 
-        with_args_call = result[0]
-        assert isinstance(with_args_call, DecoratorCall)
-        assert with_args_call.decorator_name == "decorate"
-        assert with_args_call.line_number == 4
-        assert with_args_call.call_args is None
-        assert with_args_call.call_kwargs == {"some_kwarg": "some kwarg value"}
+        decorator_call = result[0]
+        assert isinstance(decorator_call, DecoratorCall)
+        assert decorator_call.decorator_name == "decorate"
+        assert decorator_call.filename == "test.py"
+        assert decorator_call.line_number == 4
+        assert decorator_call.call_args is None
+        assert decorator_call.call_kwargs == {"some_kwarg": "some kwarg value"}
 
     def test_search_with_args_and_kwargs_call(self):
         py_module = PyModule(
@@ -84,7 +87,7 @@ class RootPlacedExecutor:
                     """
 from decorator import decorator
 class RootPlacedExecutor:
-    @decorator.decorate("some arg value", some_kwarg="some kwarg value") 
+    @decorator.decorate("some arg value", some_kwarg="some kwarg value")
     def easy_decorated_method(self, arg_1, arg_2):
         ...
                     """
@@ -94,9 +97,10 @@ class RootPlacedExecutor:
         searcher = DecoratorCallsSearcher()
         result = searcher.search(py_module)
 
-        with_args_call = result[0]
-        assert isinstance(with_args_call, DecoratorCall)
-        assert with_args_call.decorator_name == "decorate"
-        assert with_args_call.line_number == 4
-        assert with_args_call.call_args == ["some arg value"]
-        assert with_args_call.call_kwargs == {"some_kwarg": "some kwarg value"}
+        decorator_call = result[0]
+        assert isinstance(decorator_call, DecoratorCall)
+        assert decorator_call.decorator_name == "decorate"
+        assert decorator_call.filename == "test.py"
+        assert decorator_call.line_number == 4
+        assert decorator_call.call_args == ["some arg value"]
+        assert decorator_call.call_kwargs == {"some_kwarg": "some kwarg value"}
