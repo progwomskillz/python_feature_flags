@@ -1,5 +1,5 @@
 import ast
-from .decorator_call import DecoratorCall
+from linter.models.decorator_call import DecoratorCall
 
 
 class DecoratorCallsSearcher(ast.NodeVisitor):
