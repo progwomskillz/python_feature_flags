@@ -11,9 +11,8 @@ class DecoratorCall:
 
     @staticmethod
     def from_ast_attribute(ast_attribute):
-        decorator_method_name = ast_attribute.attr
         decorator_call = DecoratorCall()
-        decorator_call.decorator_name = decorator_method_name
+        decorator_call.decorator_name = ast_attribute.attr
         decorator_call.line_number = ast_attribute.lineno
         decorator_call.args = []
         decorator_call.kwargs = {}
