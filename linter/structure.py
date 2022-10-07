@@ -26,7 +26,7 @@ error_message_builder = ErrorMessageBuilder()
 py_paths_provider = PyPathsProvider(
     patterns_to_exclude=["venv", ".git", 'usr/local/lib', 'tests']
 )
-py_modules_provider = PyModulesProvider("..", py_paths_provider, ast_loader)
+py_modules_provider = PyModulesProvider(".", py_paths_provider, ast_loader)
 
 # validation_services
 args_validation_service = ArgsValidationService()
