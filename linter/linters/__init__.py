@@ -1,2 +1,3 @@
 from .decorator_usage_linter import DecoratorUsageLinter
+from .decorator_call_linter import DecoratorCallLinter
 from .py_module_linter import PyModuleLinter

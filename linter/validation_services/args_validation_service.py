@@ -6,8 +6,11 @@ class ArgsValidationService:
         errors = []
         if number_of_args_error := self.validate_number_of_args(args):
             errors.append(number_of_args_error)
-        if content_of_args_error := self.validate_content_of_args(args):
-            errors.append(content_of_args_error)
+        if not args:
+            return errors
+        for arg in args:
+            if content_of_args_error := self.validate_content_of_args(arg):
+                errors.append(content_of_args_error)
         return errors
 
     def validate_number_of_args(self, args):
@@ -21,23 +24,22 @@ class ArgsValidationService:
             f"but given {args_len}"
         )
 
-    def validate_content_of_args(self, args):
-        for arg in args:
-            try:
-                lower_value = os.environ[arg].lower()
-            except KeyError:
-                return f'{arg} feature flag not found.'
+    def validate_content_of_args(self, arg):
+        try:
+            lower_value = os.environ[arg].lower()
+        except KeyError:
+            return f'{arg} feature flag not found.'
 
-            possible_values = {
-                '1': True,
-                'true': True,
-                '0': False,
-                'false': False
-            }
-            if lower_value in possible_values:
-                return
+        possible_values = {
+            '1': True,
+            'true': True,
+            '0': False,
+            'false': False
+        }
+        if lower_value in possible_values:
+            return
 
-            return (
-                f'The {arg} feature flag has an invalid value. '
-                f'Possible values: {list(possible_values.keys())}.'
-            )
+        return (
+            f'The {arg} feature flag has an invalid value. '
+            f'Possible values: {list(possible_values.keys())}.'
+        )
