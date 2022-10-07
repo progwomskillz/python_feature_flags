@@ -23,7 +23,9 @@ decorator_calls_searcher = DecoratorCallsSearcher()
 error_message_builder = ErrorMessageBuilder()
 
 # providers
-py_paths_provider = PyPathsProvider(patterns_to_exclude=["venv", ".git"])
+py_paths_provider = PyPathsProvider(
+    patterns_to_exclude=["venv", ".git", 'usr/local/lib', 'tests']
+)
 py_modules_provider = PyModulesProvider("..", py_paths_provider, ast_loader)
 
 # validation_services

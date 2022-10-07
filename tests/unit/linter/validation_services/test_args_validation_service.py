@@ -8,7 +8,7 @@ class TestArgsValidationService:
         self.service = ArgsValidationService()
 
     def test_validate_number_of_args_wrong_case(self):
-        expected_result = "Invalid number of call args, required 1, but given 0"
+        expected_result = "Invalid number of call args, required 1, but given 0."
         result = self.service.validate_number_of_args(None)
         assert result == expected_result
 
@@ -42,7 +42,7 @@ class TestArgsValidationService:
         os_mock.environ = {'name-of-flag': 'wrong-value'}
         args = ('name-of-flag', 'wrong-flag')
         expected_result = [
-            "Invalid number of call args, required 1, but given 2",
+            "Invalid number of call args, required 1, but given 2.",
 
             "The name-of-flag feature flag has an invalid value. "
             "Possible values: ['1', 'true', '0', 'false'].",
@@ -53,6 +53,6 @@ class TestArgsValidationService:
         assert result == expected_result
 
     def test_validate_no_args_case(self):
-        expected_result = ["Invalid number of call args, required 1, but given 0"]
+        expected_result = ["Invalid number of call args, required 1, but given 0."]
         result = self.service.validate(None)
         assert result == expected_result

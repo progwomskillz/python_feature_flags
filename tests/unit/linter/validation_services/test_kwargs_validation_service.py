@@ -6,6 +6,6 @@ class TestKwargsValidationService:
         self.service = KwargsValidationService()
 
     def test_validate(self):
-        expected_result = ["Decorator call contains kwargs, but must not"]
+        expected_result = ["Decorator call contains kwargs, but must not."]
         result = self.service.validate(kwargs={"key": "value"})
         assert result == expected_result

@@ -6,7 +6,7 @@ class TestPyPathsProvider:
         self.provider = PyPathsProvider(['excluded_dir'])
 
     def test_get_paths(self):
-        root_path = "./tests/integration/linter/test_py_paths_provider/"
+        root_path = "./tests/integration/linter/providers/test_py_paths_provider/"
         result = self.provider.get_paths(root_path)
         expected_result = [
             root_path + "test_py_paths_provider.py",
